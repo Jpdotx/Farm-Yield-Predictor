@@ -162,4 +162,3 @@ if st.session_state.report_content:
         file_name="Farm_Strategy_Report.txt",
         mime="text/plain"
     )
-    
