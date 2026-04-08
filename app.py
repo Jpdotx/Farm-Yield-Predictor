@@ -97,6 +97,23 @@ try:
     st.plotly_chart(fig, use_container_width=True)
 except Exception as e:
     st.warning(f"Could not display feature importance: {e}")
+    # 4. CSV Batch Processing Logic
+if uploaded_file is not None:
+    st.markdown("---")
+    st.header("📊 Batch Analysis Results")
+    df = pd.read_csv(uploaded_file)
+    
+    # Required columns check
+    req = ['Fertilizer', 'temp', 'N', 'P', 'K']
+    if all(col in df.columns for col in req):
+        df['Predicted_Yield'] = model.predict(df[req])
+        df['Net_Profit'] = (df['Predicted_Yield'] * price) - cost
+        st.dataframe(df)
+        # Download button
+        csv = df.to_csv(index=False).encode('utf-8')
+        st.download_button("Download Full Prediction Report", data=csv, file_name="farm_report.csv")
+    else:
+        st.error(f"CSV must have these columns: {req}")
 
 # --- 7. EXPORT & NEXT STEPS ---
 st.sidebar.markdown("---")
