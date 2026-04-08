@@ -102,7 +102,7 @@ if uploaded_file is not None:
     st.markdown("---")
     st.header("📊 Batch Analysis Results")
     df = pd.read_csv(uploaded_file)
-    
+   
     # Required columns check
     req = ['Fertilizer', 'temp', 'N', 'P', 'K']
     if all(col in df.columns for col in req):
